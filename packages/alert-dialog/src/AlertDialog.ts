@@ -19,7 +19,9 @@ import {
     property,
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
-import '@spectrum-web-components/button/sp-button.js';
+import { ButtonGroup } from '@spectrum-web-components/button-group';
+import { Divider } from '@spectrum-web-components/divider';
+import { IconAlert } from '@spectrum-web-components/icons-workflow/src/elements/IconAlert.js';
 import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared';
 import { conditionAttributeWithId } from '@spectrum-web-components/base/src/condition-attribute-with-id.js';
 import { ResizeController } from '@lit-labs/observers/resize-controller.js';
@@ -63,6 +65,12 @@ function gatherAppliedIdsFromSlottedChildren(
     return ids;
 }
 export class AlertDialog extends FocusVisiblePolyfillMixin(SpectrumElement) {
+    static override elements = {
+        'sp-button-group': ButtonGroup,
+        'sp-divier': Divider,
+        'sp-icon-alert': IconAlert,
+    };
+
     public static override get styles(): CSSResultArray {
         return [alertStyles];
     }

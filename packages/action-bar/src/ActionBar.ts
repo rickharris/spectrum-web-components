@@ -17,10 +17,10 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
-import '@spectrum-web-components/popover/sp-popover.js';
-import '@spectrum-web-components/action-group/sp-action-group.js';
-import '@spectrum-web-components/button/sp-close-button.js';
-import '@spectrum-web-components/field-label/sp-field-label.js';
+import { ActionGroup } from '@spectrum-web-components/action-group';
+import { CloseButton } from '@spectrum-web-components/button';
+import { FieldLabel } from '@spectrum-web-components/field-label';
+import { Popover } from '@spectrum-web-components/popover';
 import actionBarStyles from './action-bar.css.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 export const actionBarVariants = ['sticky', 'fixed'];
@@ -30,6 +30,12 @@ export const actionBarVariants = ['sticky', 'fixed'];
  * @slot - Content to display with the Action Bar
  */
 export class ActionBar extends SpectrumElement {
+    static override elements = {
+        'sp-action-group': ActionGroup,
+        'sp-close-button': CloseButton,
+        'sp-field-label': FieldLabel,
+        'sp-popover': Popover,
+    };
     public static override get styles(): CSSResultArray {
         return [actionBarStyles];
     }

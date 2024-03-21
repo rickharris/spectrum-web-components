@@ -19,10 +19,10 @@ import {
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { StyledButton } from './StyledButton.js';
 import buttonStyles from '@spectrum-web-components/close-button/src/close-button.css.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-cross200.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-cross300.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-cross400.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-cross500.js';
+import { IconCross200 } from '@spectrum-web-components/icons-ui/src/elements/IconCross200.js';
+import { IconCross300 } from '@spectrum-web-components/icons-ui/src/elements/IconCross300.js';
+import { IconCross400 } from '@spectrum-web-components/icons-ui/src/elements/IconCross400.js';
+import { IconCross500 } from '@spectrum-web-components/icons-ui/src/elements/IconCross500.js';
 import crossMediumStyles from '@spectrum-web-components/icon/src/spectrum-icon-cross.css.js';
 import type { ButtonStatics } from './Button.js';
 
@@ -62,6 +62,13 @@ const crossIcon: Record<string, () => TemplateResult> = {
 export class CloseButton extends SizedMixin(StyledButton, {
     noDefaultSize: true,
 }) {
+    static override elements = {
+        'sp-icon-cross200': IconCross200,
+        'sp-icon-cross300': IconCross300,
+        'sp-icon-cross400': IconCross400,
+        'sp-icon-cross500': IconCross500,
+    };
+
     public static override get styles(): CSSResultArray {
         return [...super.styles, buttonStyles, crossMediumStyles];
     }

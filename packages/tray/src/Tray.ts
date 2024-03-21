@@ -21,7 +21,7 @@ import {
     property,
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
-import '@spectrum-web-components/underlay/sp-underlay.js';
+import { Underlay } from '@spectrum-web-components/underlay';
 import { firstFocusableIn } from '@spectrum-web-components/shared/src/first-focusable-in.js';
 import { MatchMediaController } from '@spectrum-web-components/reactive-controllers/src/MatchMedia.js';
 
@@ -36,6 +36,10 @@ import styles from './tray.css.js';
  * @fires close - Announces that the Tray has been closed.
  */
 export class Tray extends SpectrumElement {
+    static override elements = {
+        'sp-underlay': Underlay,
+    };
+
     public static override get styles(): CSSResultArray {
         return [modalStyles, styles];
     }
