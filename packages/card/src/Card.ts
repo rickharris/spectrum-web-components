@@ -10,7 +10,6 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { ScopedElementsMixin } from '@open-wc/scoped-elements/html-element.js';
 import {
     CSSResultArray,
     html,
@@ -48,21 +47,19 @@ import detailStyles from '@spectrum-web-components/styles/detail.js';
  * @slot actions - an `sp-action-menu` element outlining actions to take on the represened object
  * @slot footer - Footer text
  */
-export class Card extends ScopedElementsMixin(
-    LikeAnchor(
-        SizedMixin(
-            ObserveSlotPresence(FocusVisiblePolyfillMixin(SpectrumElement), [
-                '[slot="cover-photo"]',
-                '[slot="preview"]',
-            ]),
-            {
-                validSizes: ['s', 'm'],
-                noDefaultSize: true,
-            }
-        )
+export class Card extends LikeAnchor(
+    SizedMixin(
+        ObserveSlotPresence(FocusVisiblePolyfillMixin(SpectrumElement), [
+            '[slot="cover-photo"]',
+            '[slot="preview"]',
+        ]),
+        {
+            validSizes: ['s', 'm'],
+            noDefaultSize: true,
+        }
     )
 ) {
-    static scopedElements = {
+    static override elements = {
         'sp-asset': Asset,
         'sp-checkbox': Checkbox,
         'sp-divier': Divider,

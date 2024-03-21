@@ -10,7 +10,11 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, TemplateResult } from '@spectrum-web-components/base';
+import {
+    html,
+    scopedElementFactory,
+    TemplateResult,
+} from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/link/sp-link.js';
 import '@spectrum-web-components/picker/sp-picker.js';
@@ -27,6 +31,10 @@ import '../../overlay/stories/index.js';
 import { handleChange, StoryArgs, Template } from './template.js';
 import { argTypes } from './args.js';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
+import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
+import { Picker } from '../src/Picker';
+
+defineElement('sp-picker-scoped-registry', scopedElementFactory(Picker));
 
 export default {
     title: 'Picker',
@@ -634,3 +642,33 @@ custom.args = {
     open: true,
 };
 custom.decorators = [isOverlayOpen];
+
+export const Scoped = (args: StoryArgs): TemplateResult => {
+    return html`
+        <sp-field-label for="picker-1" size=${ifDefined(args.size)}>
+            Where do you live?
+        </sp-field-label>
+        <sp-picker-scoped-registry
+            id="picker-1"
+            @change=${handleChange(args)}
+            label="Select a Country with a very long label, too long, in fact"
+            ${spreadProps(args)}
+        >
+            <sp-menu-item value="option-1">Deselect</sp-menu-item>
+            <sp-menu-item value="option-2">Select Inverse</sp-menu-item>
+            <sp-menu-item value="option-3">Feather...</sp-menu-item>
+            <sp-menu-item value="option-4">Select and Mask...</sp-menu-item>
+            <sp-menu-item value="option-5">Save Selection</sp-menu-item>
+            <sp-menu-item disabled value="option-6">
+                Make Work Path
+            </sp-menu-item>
+        </sp-picker-scoped-registry>
+        <p>This is some text.</p>
+        <p>This is some text.</p>
+        <p>
+            This is a
+            <a href="#anchor">link</a>
+            .
+        </p>
+    `;
+};

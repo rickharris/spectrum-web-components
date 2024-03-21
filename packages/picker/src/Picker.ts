@@ -10,7 +10,6 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { ScopedElementsMixin } from '@open-wc/scoped-elements/html-element.js';
 import {
     CSSResultArray,
     DefaultElementSize,
@@ -61,10 +60,8 @@ const chevronClass = {
 };
 
 export const DESCRIPTION_ID = 'option-picker';
-export class PickerBase extends ScopedElementsMixin(
-    SizedMixin(Focusable, { noDefaultSize: true })
-) {
-    static scopedElements = {
+export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
+    static override elements = {
         'sp-icon-chevron100': IconChevron100,
         'sp-icon-alert': IconAlert,
         'sp-menu': Menu,

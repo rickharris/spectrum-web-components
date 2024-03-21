@@ -9,7 +9,11 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html, TemplateResult } from '@spectrum-web-components/base';
+import {
+    html,
+    scopedElementFactory,
+    TemplateResult,
+} from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/card/sp-card.js';
 import { landscape, portrait } from './images';
@@ -20,6 +24,10 @@ import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
 import '@spectrum-web-components/link/sp-link.js';
+import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
+import { Card } from '../src/Card';
+
+defineElement('sp-card-scoped-registry', scopedElementFactory(Card));
 
 export default {
     component: 'sp-card',
@@ -368,3 +376,18 @@ export const SlottedHeading = (args: StoryArgs): TemplateResult => {
         </sp-card>
     `;
 };
+
+export const ScopedElements = (args: StoryArgs): TemplateResult => {
+    return html`
+        <sp-card-scoped-registry
+            heading="Card Heading"
+            subheading="JPG"
+            ?horizontal=${args.horizontal}
+            style="width: 200px;"
+        >
+            <img slot="cover-photo" src=${portrait} alt="Demo Graphic" />
+            <div slot="footer">Footer</div>
+        </sp-card-scoped-registry>
+    `;
+};
+ScopedElements.args = {};
