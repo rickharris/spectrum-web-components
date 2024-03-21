@@ -65,6 +65,7 @@
         "lit-html"
     ],
     "dependencies": {
+        "@open-wc/scoped-elements": "^3.0.5",
         "@spectrum-web-components/base": "^0.42.0",
         "@spectrum-web-components/button": "^0.42.0",
         "@spectrum-web-components/field-label": "^0.42.0",
