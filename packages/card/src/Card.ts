@@ -27,12 +27,10 @@ import {
 import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/focus-visible.js';
 import { ObserveSlotPresence } from '@spectrum-web-components/shared/src/observe-slot-presence.js';
 import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
-import '@spectrum-web-components/asset/sp-asset.js';
-
-import { Checkbox } from '@spectrum-web-components/checkbox/src/Checkbox';
-import '@spectrum-web-components/checkbox/sp-checkbox.js';
-import '@spectrum-web-components/quick-actions/sp-quick-actions.js';
-import '@spectrum-web-components/divider/sp-divider.js';
+import { Asset } from '@spectrum-web-components/asset';
+import { Checkbox } from '@spectrum-web-components/checkbox';
+import { QuickActions } from '@spectrum-web-components/quick-actions';
+import { Divider } from '@spectrum-web-components/divider';
 import cardStyles from './card.css.js';
 import headingStyles from '@spectrum-web-components/styles/heading.js';
 import detailStyles from '@spectrum-web-components/styles/detail.js';
@@ -61,6 +59,13 @@ export class Card extends LikeAnchor(
         }
     )
 ) {
+    static override elements = {
+        'sp-asset': Asset,
+        'sp-checkbox': Checkbox,
+        'sp-divier': Divider,
+        'sp-quick-actions': QuickActions,
+    };
+
     public static override get styles(): CSSResultArray {
         return [headingStyles, detailStyles, cardStyles];
     }

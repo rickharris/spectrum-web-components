@@ -37,10 +37,9 @@ import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevr
 
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import type { Tooltip } from '@spectrum-web-components/tooltip';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
-import '@spectrum-web-components/menu/sp-menu.js';
-import type {
+import { IconChevron100 } from '@spectrum-web-components/icons-ui/src/elements/IconChevron100.js';
+import { IconAlert } from '@spectrum-web-components/icons-workflow/src/elements/IconAlert.js';
+import {
     Menu,
     MenuItem,
     MenuItemChildren,
@@ -62,6 +61,12 @@ const chevronClass = {
 
 export const DESCRIPTION_ID = 'option-picker';
 export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
+    static override elements = {
+        'sp-icon-chevron100': IconChevron100,
+        'sp-icon-alert': IconAlert,
+        'sp-menu': Menu,
+    };
+
     protected isMobile = new MatchMediaController(this, IS_MOBILE);
 
     @state()
@@ -457,8 +462,14 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                       `
                     : nothing}
                 ${when(this.pending, () => {
-                    import(
-                        '@spectrum-web-components/progress-circle/sp-progress-circle.js'
+                    import('@spectrum-web-components/progress-circle').then(
+                        (m) => {
+                            !this.registry?.get('sp-progress-circle') &&
+                                this.registry?.define(
+                                    'sp-progress-circle',
+                                    m.ProgressCircle
+                                );
+                        }
                     );
                     // aria-valuetext is a workaround for aria-valuenow being applied in Firefox even in indeterminate mode.
                     return html`
@@ -497,7 +508,10 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     protected renderOverlay(menu: TemplateResult): TemplateResult {
         const container = this.renderContainer(menu);
         this.trackDependency('sp-overlay');
-        import('@spectrum-web-components/overlay/sp-overlay.js');
+        import('@spectrum-web-components/overlay').then((m) => {
+            !this.registry?.get('sp-overlay') &&
+                this.registry?.define('sp-overlay', m.Overlay);
+        });
         return html`
             <sp-overlay
                 .triggerElement=${this as HTMLElement}
@@ -649,11 +663,11 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
 
     private trackDependency(dependency: string, flag?: boolean): void {
         const loaded =
-            !!customElements.get(dependency) ||
+            !!this.registry?.get(dependency) ||
             this.dependenciesToLoad[dependency] ||
             !!flag;
         if (!loaded) {
-            customElements.whenDefined(dependency).then(() => {
+            this.registry?.whenDefined(dependency).then(() => {
                 this.trackDependency(dependency, true);
             });
         }
@@ -674,7 +688,10 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         /* c8 ignore next 11 */
         if (this.isMobile.matches) {
             this.trackDependency('sp-tray');
-            import('@spectrum-web-components/tray/sp-tray.js');
+            import('@spectrum-web-components/tray').then((m) => {
+                !this.registry?.get('sp-tray') &&
+                    this.registry?.define('sp-tray', m.Tray);
+            });
             return html`
                 <sp-tray
                     id="popover"
@@ -686,7 +703,10 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
             `;
         }
         this.trackDependency('sp-popover');
-        import('@spectrum-web-components/popover/sp-popover.js');
+        import('@spectrum-web-components/popover').then((m) => {
+            !this.registry?.get('sp-popover') &&
+                this.registry?.define('sp-popover', m.Popover);
+        });
         return html`
             <sp-popover
                 id="popover"

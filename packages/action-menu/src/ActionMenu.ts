@@ -20,10 +20,10 @@ import { state } from '@spectrum-web-components/base/src/decorators.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { DESCRIPTION_ID, PickerBase } from '@spectrum-web-components/picker';
-import '@spectrum-web-components/action-button/sp-action-button.js';
+import { ActionButton } from '@spectrum-web-components/action-button';
 import { ObserveSlotPresence } from '@spectrum-web-components/shared/src/observe-slot-presence.js';
 import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-more.js';
+import { IconMore } from '@spectrum-web-components/icons-workflow/src/elements/IconMore.js';
 import actionMenuStyles from './action-menu.css.js';
 import { SlottableRequestEvent } from '@spectrum-web-components/overlay/src/slottable-request-event.js';
 
@@ -42,6 +42,12 @@ export class ActionMenu extends ObserveSlotPresence(
     ObserveSlotText(PickerBase, 'label'),
     '[slot="label-only"]'
 ) {
+    static override elements = {
+        ...PickerBase.elements,
+        'sp-icon-more': IconMore,
+        'sp-action-button': ActionButton,
+    };
+
     public static override get styles(): CSSResultArray {
         return [actionMenuStyles];
     }

@@ -20,7 +20,7 @@ import {
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import { when } from '@spectrum-web-components/base/src/directives.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
+import { IconChevron100 } from '@spectrum-web-components/icons-ui/src/elements/IconChevron100.js';
 import chevronIconStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 
 import styles from './accordion-item.css.js';
@@ -68,6 +68,7 @@ const chevronIcon: Record<string, () => TemplateResult> = {
 export class AccordionItem extends SizedMixin(Focusable, {
     noDefaultSize: true,
 }) {
+    static override elements = { 'sp-icon-chevron100': IconChevron100 };
     public static override get styles(): CSSResultArray {
         return [styles, chevronIconStyles];
     }

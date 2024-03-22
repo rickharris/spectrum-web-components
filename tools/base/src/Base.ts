@@ -187,6 +187,42 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
 
 export class SpectrumElement extends SpectrumMixin(LitElement) {
     static VERSION = version;
+    static elements?: Record<string, CustomElementConstructor>;
+    static _registry: CustomElementRegistry = customElements;
+
+    get registry(): CustomElementRegistry {
+        return (this.constructor as typeof SpectrumElement)._registry;
+    }
+
+    override attachShadow(options: ShadowRootInit): ShadowRoot {
+        const { elements } = this.constructor as typeof SpectrumElement;
+
+        if (elements) {
+            for (const [tagName, klass] of Object.entries(elements)) {
+                !this.registry.get(tagName) &&
+                    this.registry.define(tagName, klass);
+            }
+        }
+
+        if (this.registry === customElements || !elements) {
+            return super.attachShadow(options);
+        }
+
+        return super.attachShadow({
+            ...options,
+            // @ts-expect-error - `registry` is not yet in the types for `ShadowRootInit`
+            registry: this.registry,
+        });
+    }
+}
+
+export function scopedElementFactory(
+    constructor: typeof SpectrumElement,
+    registry: CustomElementRegistry = new CustomElementRegistry()
+): typeof SpectrumElement {
+    return class ScopedElement extends constructor {
+        static override _registry = registry;
+    };
 }
 
 if (window.__swc.DEBUG) {

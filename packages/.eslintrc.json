@@ -66,6 +66,25 @@
     },
     "overrides": [
         {
+            "files": ["**/src/**"],
+            "rules": {
+                "@typescript-eslint/no-restricted-imports": [
+                    "error",
+                    {
+                        "patterns": [
+                            {
+                                "group": [
+                                    "@spectrum-web-components/**/sp-*.js",
+                                    "@spectrum-web-components/overlay/overlay-trigger.js"
+                                ],
+                                "message": "Avoid importing self-registering components internally. Instead please use the `elements` static property on SpectrumElement to define a component's dependencies"
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
             "files": [
                 "*.test.ts",
                 "*.stories.ts",
